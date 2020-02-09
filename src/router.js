@@ -9,11 +9,11 @@ const isPalindrome = word => {
   return word === reversedWord;
 }
 
-router.get('/api/getScores', (req, res) => {
+const getScores = (req, res) => {
   res.send(highScores.get());
-});
+};
 
-router.post('/api/submitEntry', (req, res) => {
+const submitEntry = (req, res) => {
   const { word, name } = req.body;
 
   if (isPalindrome(word)) {
@@ -22,6 +22,9 @@ router.post('/api/submitEntry', (req, res) => {
   } else {
     res.send({ score: 0 });
   }
-});
+}
+
+router.get('/api/getScores', getScores);
+router.post('/api/submitEntry', submitEntry);
 
 module.exports = { router, isPalindrome };
