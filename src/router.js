@@ -20,7 +20,7 @@ router.post('/api/submitEntry', (req, res) => {
     highScores.update({ name, points: word.length });
     res.send({ score: word.length });
   } else {
-    res.send({});
+    res.send({ score: 0 });
   }
 });
 
