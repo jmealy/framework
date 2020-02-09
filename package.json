@@ -6,6 +6,10 @@
   },
   "scripts": {
     "start": "nodemon index.js",
-    "debug": "node --nolazy --inspect-brk=9229 myProgram.js"
+    "debug": "node --nolazy --inspect-brk=9229 myProgram.js",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   }
 }

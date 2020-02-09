@@ -9,16 +9,16 @@ const highScores = (function () {
     get: function () {
       return highScores;
     },
-    update: function(score) {
+    update: function (score) {
       if (highScores.length < config.leaderboardSize) {
         highScores.push(score);
       } else if (score.points > thresholdScore.points) {
         highScores.pop();
         highScores.push(score);
       }
-  
+
       highScores.sort((a, b) => a.points < b.points);
-      thresholdScore = highScores[highScores.length - 1];  
+      thresholdScore = highScores[highScores.length - 1];
     }
   }
 })();

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const highScores = require('./models/highScores');
+const highScores = require('./model/highScores');
 
 const isPalindrome = word => {
   const reversedWord = word.split('').reverse().join('');
@@ -15,10 +15,10 @@ router.post('/api/submitEntry', (req, res) => {
 
   if (isPalindrome(word)) {
     highScores.update({ name, points: word.length });
-    res.send('word.length');
+    res.send({ score: word.length });
   } else {
-    res.send('');
+    res.send({});
   }
 });
 
-module.exports = router
+module.exports = { router, isPalindrome };
