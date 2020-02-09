@@ -1,8 +1,14 @@
 const { isPalindrome } = require('./router');
 
-test('Checks if word is palindrome', () => {
+test('returns true for palindromes', () => {
   expect(isPalindrome('racecar')).toBe(true);
-  expect(isPalindrome('1212121')).toBe(true);
+});
 
-  expect(isPalindrome('racecars')).toBe(false);
+test('returns false for non palindromes', () => {
+  expect(isPalindrome('router')).toBe(false);
+});
+
+test('returns false for invalid characters', () => {
+  expect(isPalindrome('a man, a plan, a canal, panama')).toBe(false);
+  expect(isPalindrome('!!22!!')).toBe(false);
 });

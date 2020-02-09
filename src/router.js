@@ -2,6 +2,9 @@ const router = require('express').Router();
 const highScores = require('./model/highScores');
 
 const isPalindrome = word => {
+  // Only allow alphabetic characters.
+  if (!word.match(/^[a-z]+$/)) return false;
+
   const reversedWord = word.split('').reverse().join('');
   return word === reversedWord;
 }
