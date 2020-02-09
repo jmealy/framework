@@ -1,30 +1,43 @@
-const { isPalindrome, router } = require('./router');
+const router = require('./router');
 const highScores = require('./model/highScores');
 
+const mockHighScores = [{ name: 'testName', points: 5 }]
 jest.mock('./model/highScores', () => ({
   update: jest.fn(),
-  get: jest.fn()
+  get: jest.fn(() => mockHighScores)
 }));
-
 
 describe('isPalindrome', () => {
   test('returns true for palindromes', () => {
-    expect(isPalindrome('racecar')).toBe(true);
+    expect(router.isPalindrome('racecar')).toBe(true);
   });
 
   test('returns false for non palindromes', () => {
-    expect(isPalindrome('router')).toBe(false);
+    expect(router.isPalindrome('router')).toBe(false);
   });
 
   test('returns false for invalid characters', () => {
-    expect(isPalindrome('a man, a plan, a canal, panama')).toBe(false);
-    expect(isPalindrome('!!22!!')).toBe(false);
+    expect(router.isPalindrome('a man, a plan, a canal, panama')).toBe(false);
+    expect(router.isPalindrome('!!22!!')).toBe(false);
   });
 });
 
 describe('router', () => {
-  test('requests highscores', () => {
+  test('responds with highscores', () => {
+    const req = {};
+    const res = { send: jest.fn() }
+    router.getScores(req, res);
+    expect(highScores.get).toHaveBeenCalled();
+    expect(res.send).toHaveBeenCalledWith(mockHighScores);
+  });
+
+  xtest('updates highScores', () => {
+
     // mock high scores
-    router.getScores();
+    const req = {};
+    const res = { send: jest.fn() }
+    getScores(req, res);
+    expect(highScores.get).toHaveBeenCalled();
+    expect(res.send).toHaveBeenCalledWith(mockHighScores);
   });
 });

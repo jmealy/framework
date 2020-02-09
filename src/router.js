@@ -27,4 +27,9 @@ const submitEntry = (req, res) => {
 router.get('/api/getScores', getScores);
 router.post('/api/submitEntry', submitEntry);
 
-module.exports = { router, isPalindrome };
+module.exports = {
+  router,
+  isPalindrome,
+  getScores,
+  submitEntry
+};
