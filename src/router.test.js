@@ -22,16 +22,18 @@ describe('isPalindrome', () => {
   });
 });
 
-describe('router', () => {
-  test('getScores', () => {
+describe('getScores', () => {
+  test('responds with high scores', () => {
     const req = {};
     const res = { send: jest.fn() }
     router.getScores(req, res);
     expect(highScores.get).toHaveBeenCalled();
     expect(res.send).toHaveBeenCalledWith(mockHighScores);
   });
+});
 
-  test('submitEntry', () => {
+describe('submitEntry', () => {
+  test('responds with palindrome word length', () => {
     router.isPalindrome = jest.fn(() => true);
     const mockRequestBody = { word: 'viv', name: 'Tim' };
     const req = { body: mockRequestBody };
@@ -39,5 +41,15 @@ describe('router', () => {
     router.submitEntry(req, res);
     
     expect(res.send).toHaveBeenCalledWith({ score: mockRequestBody.word.length });
+  });
+
+  test('responds with zero if not a palindrome', () => {
+    router.isPalindrome = jest.fn(() => false);
+    const mockRequestBody = { word: 'vivacious', name: 'Tim' };
+    const req = { body: mockRequestBody };
+    const res = { send: jest.fn() }
+    router.submitEntry(req, res);
+    
+    expect(res.send).toHaveBeenCalledWith({ score: 0 });
   });
 });
