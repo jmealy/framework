@@ -23,7 +23,7 @@ describe('isPalindrome', () => {
 });
 
 describe('router', () => {
-  test('responds with highscores', () => {
+  test('getScores', () => {
     const req = {};
     const res = { send: jest.fn() }
     router.getScores(req, res);
@@ -31,13 +31,13 @@ describe('router', () => {
     expect(res.send).toHaveBeenCalledWith(mockHighScores);
   });
 
-  xtest('updates highScores', () => {
-
-    // mock high scores
-    const req = {};
+  test('submitEntry', () => {
+    router.isPalindrome = jest.fn(() => true);
+    const mockRequestBody = { word: 'viv', name: 'Tim' };
+    const req = { body: mockRequestBody };
     const res = { send: jest.fn() }
-    getScores(req, res);
-    expect(highScores.get).toHaveBeenCalled();
-    expect(res.send).toHaveBeenCalledWith(mockHighScores);
+    router.submitEntry(req, res);
+    
+    expect(res.send).toHaveBeenCalledWith({ score: mockRequestBody.word.length });
   });
 });
