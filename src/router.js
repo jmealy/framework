@@ -9,13 +9,14 @@ let highScores = [];
 let thresholdScore = 0;
 
 const addScore = score => {
-  highScores.sort((a, b) => a.points < b.points);
   if (highScores.length < 5) {
     highScores.push(score);
   } else if (score.points > thresholdScore) {
     highScores.pop();
     highScores.push(score);
   }
+
+  highScores.sort((a, b) => a.points < b.points);
   const lastIndex = highScores.length - 1;
   thresholdScore = highScores[lastIndex].points;
 }
