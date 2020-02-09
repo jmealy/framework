@@ -5,28 +5,62 @@ const checkPalindrome = word => {
   return word === reversedWord;
 }
 
-let highScores = [];
-let thresholdScore;
+// let highScores = [];
+// let thresholdScore;
 
-const addScore = score => {
-  if (highScores.length < 5) {
-    highScores.push(score);
-  } else if (score.points > thresholdScore.points) {
-    highScores.pop();
-    highScores.push(score);
+// const addScore = score => {
+//   if (highScores.length < 5) {
+//     highScores.push(score);
+//   } else if (score.points > thresholdScore.points) {
+//     highScores.pop();
+//     highScores.push(score);
+//   }
+
+//   highScores.sort((a, b) => a.points < b.points);
+//   thresholdScore = highScores[highScores.length - 1];
+// }
+
+const highScores = (function () {
+  let highScores = [];
+  let thresholdScore;
+
+  // const update = score => {
+  //   if (highScores.length < 5) {
+  //     highScores.push(score);
+  //   } else if (score.points > thresholdScore.points) {
+  //     highScores.pop();
+  //     highScores.push(score);
+  //   }
+
+  //   highScores.sort((a, b) => a.points < b.points);
+  //   thresholdScore = highScores[highScores.length - 1];
+  // }
+
+  // const get = () => {
+  //   return highScores;
+  // }
+
+  return {
+    get: function () {
+      return highScores;
+    },
+    update: function(score) {
+      if (highScores.length < 5) {
+        highScores.push(score);
+      } else if (score.points > thresholdScore.points) {
+        highScores.pop();
+        highScores.push(score);
+      }
+  
+      highScores.sort((a, b) => a.points < b.points);
+      thresholdScore = highScores[highScores.length - 1];  
+    }
   }
-
-  highScores.sort((a, b) => a.points < b.points);
-  thresholdScore = highScores[highScores.length - 1];
-}
+})();
 
 
 router.get('/api/getScores', (req, res) => {
-  // console.log(JSON.stringify(highscores));
-  // highScores.sort( (a, b) => {
-  //   return a.points < b.points
-  // });
-  res.send(highScores);
+  res.send(highScores.get());
 });
 
 router.post('/api/submitEntry', (req, res) => {
@@ -36,7 +70,7 @@ router.post('/api/submitEntry', (req, res) => {
 
   if (isPalindrome) {
     // highScores.push({ name: name, points: word.length });
-    addScore({ name: name, points: word.length });
+    highScores.update({ name: name, points: word.length });
 
     res.send('word.length');
   } else {
