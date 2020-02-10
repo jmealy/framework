@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 
 app.use('/', router);
 
-var port = 3000;
+const port = 3000;
 app.listen(port, function () {
 	console.log('Server', process.pid, 'listening on port', port);
 });
